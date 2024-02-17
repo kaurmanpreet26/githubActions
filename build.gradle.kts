@@ -1,29 +1,39 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+val ktor_version: String by project
+val kotlin_version: String by project
+val logback_version: String by project
 
 plugins {
-    kotlin("jvm") version "1.8.21"
-    application
+    kotlin("jvm") version "1.9.0"
+    id("io.ktor.plugin") version "2.3.3"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "hackathon"
+version = "0.0.1"
+
+application {
+    mainClass.set("hackathon.ApplicationKt")
+
+    val isDevelopment: Boolean = project.ext.has("development")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation("io.ktor:ktor-server-core-jvm")
+    implementation("io.ktor:ktor-server-netty-jvm")
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+    testImplementation("io.ktor:ktor-server-tests-jvm")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testImplementation ("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testImplementation ("org.junit.platform:junit-platform-runner:1.9.3")
 }
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClass.set("MainKt")
+tasks {
+    test {
+        useJUnitPlatform {
+        }
+    }
 }
