@@ -1,0 +1,3 @@
+fileignoreconfig:
+- filename: .github/workflows/testAction.yml
+  checksum: a2d09f9666d574c7efd91b3da72544ab38a8c6421b263370c29febd775b42223
