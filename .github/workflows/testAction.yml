@@ -42,5 +42,7 @@ jobs:
         with:
           name: build-artifact
           path: build/libs/
+      - name: Output contents
+        run: echo ${{ needs.build.outputs.jar-file }}
       - name: Deploy
         run: echo "Deploying artifact"
