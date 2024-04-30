@@ -15,6 +15,8 @@ jobs:
         run: ./gradlew test
   build:
     needs: test
+    outputs:
+      GITHUB_OUTPUT: ${{ steps.publish.outputs.jar-file }}
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -26,6 +28,9 @@ jobs:
         with:
           name: build-artifact
           path: build/libs/
+    -name: Publish output
+    id: publish
+    run: find . -type f -name "*.jar" -exec echo "jar-file {}" >>$GITHUB_OUTPUT;
   deploy:
     needs: build
     runs-on: ubuntu-latest
