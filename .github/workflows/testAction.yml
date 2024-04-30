@@ -28,9 +28,9 @@ jobs:
         with:
           name: build-artifact
           path: build/libs/
-    -name: Publish output
-    id: publish
-    run: find . -type f -name "*.jar" -exec echo "jar-file {}" >>$GITHUB_OUTPUT;
+      - name: Publish output
+        id: publish
+        run: find . -type f -name "*.jar" -exec echo "jar-file {}" >>$GITHUB_OUTPUT;
   deploy:
     needs: build
     runs-on: ubuntu-latest
