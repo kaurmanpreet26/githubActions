@@ -30,7 +30,7 @@ jobs:
           path: build/libs/
       - name: Publish output
         id: publish
-        run: find . -type f -name "*.jar" -exec echo "jar-file {}" >>$GITHUB_OUTPUT;
+        run: find . -type f -name "*.jar" -execdir echo "jar-file {}" >>$GITHUB_OUTPUT;
   deploy:
     needs: build
     runs-on: ubuntu-latest
